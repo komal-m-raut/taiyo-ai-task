@@ -2,10 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Contact } from "../types/contactTypes";
 
 const initialState: { contacts: Contact[] } = {
-  contacts: [
-    { id: 1, name: "John Doe", email: "john@example.com" },
-    { id: 2, name: "Jane Doe", email: "jane@example.com" },
-  ],
+  contacts: [],
 };
 
 const contactsSlice = createSlice({

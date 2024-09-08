@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa"; // Importing icons
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,22 +10,42 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div
-      className={`h-screen ${
-        isOpen ? "w-64" : "w-16"
-      } bg-gray-800 transition-width duration-300`}
-    >
-      <button onClick={toggleSidebar} className="p-4 text-white">
-        {isOpen ? "Close" : "Open"}
-      </button>
-      <ul className="mt-4 text-white">
-        <li>
-          <Link to="/">Contacts</Link>
-        </li>
-        <li>
-          <Link to="/charts">Charts</Link>
-        </li>
-      </ul>
+    <div className="relative min-h-screen flex">
+      <div
+        className={`bg-gray-800 text-white ${
+          isOpen ? "w-64" : "w-12"
+        } transition-all duration-300 ease-in-out h-full flex flex-col`}
+      >
+        <button
+          onClick={toggleSidebar}
+          className="text-white focus:outline-none p-4"
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        <ul className="mt-4 space-y-4">
+          <li>
+            <Link
+              to="/"
+              className="flex items-center p-2 hover:bg-gray-700 rounded"
+            >
+              <span className={`${isOpen ? "inline" : "hidden"} ml-2`}>
+                Contacts
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/charts"
+              className="flex items-center p-2 hover:bg-gray-700 rounded"
+            >
+              <span className={`${isOpen ? "inline" : "hidden"} ml-2`}>
+                Charts
+              </span>
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
