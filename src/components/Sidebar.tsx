@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
                   className="flex items-center p-2 hover:bg-gray-700 rounded"
                 >
                   <span className={isOpen ? "inline" : "hidden"} ml-2>
-                    Charts
+                    Charts and Maps
                   </span>
                 </Link>
               </li>
