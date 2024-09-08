@@ -23,28 +23,32 @@ const Sidebar: React.FC = () => {
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        <ul className="mt-4 space-y-4">
-          <li>
-            <Link
-              to="/"
-              className="flex items-center p-2 hover:bg-gray-700 rounded"
-            >
-              <span className={`${isOpen ? "inline" : "hidden"} ml-2`}>
-                Contacts
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/charts"
-              className="flex items-center p-2 hover:bg-gray-700 rounded"
-            >
-              <span className={`${isOpen ? "inline" : "hidden"} ml-2`}>
-                Charts
-              </span>
-            </Link>
-          </li>
-        </ul>
+        {isOpen && (
+          <>
+            <ul className="mt-4 space-y-4">
+              <li>
+                <Link
+                  to="/"
+                  className="flex items-center p-2 hover:bg-gray-700 rounded"
+                >
+                  <span className={isOpen ? "inline" : "hidden"} ml-2>
+                    Contacts
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/charts"
+                  className="flex items-center p-2 hover:bg-gray-700 rounded"
+                >
+                  <span className={isOpen ? "inline" : "hidden"} ml-2>
+                    Charts
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );

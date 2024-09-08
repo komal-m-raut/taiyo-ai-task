@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Line } from "react-chartjs-2";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import L, { LatLngBounds } from "leaflet";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,6 +23,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+const bounds = new LatLngBounds([-90, -180], [90, 180]);
 
 const fetchGlobalData = async () => {
   const response = await fetch("https://disease.sh/v3/covid-19/all");
@@ -91,6 +93,7 @@ const ChartPage: React.FC = () => {
 
   const lineChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top" as const,
@@ -113,25 +116,47 @@ const ChartPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Covid-19 Data Dashboard</h1>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          Covid-19 Data Dashboard
+        </h1>
 
-      {/* Worldwide Stats */}
-      <div>
-        <h2>Worldwide Data</h2>
-        <p>Total Cases: {globalData.cases}</p>
-        <p>Total Deaths: {globalData.deaths}</p>
-        <p>Total Recovered: {globalData.recovered}</p>
+        {/* Worldwide Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Total Cases</h2>
+            <p className="text-gray-700 text-center text-lg">
+              {globalData.cases.toLocaleString()}
+            </p>
+          </div>
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Total Deaths</h2>
+            <p className="text-gray-700 text-center text-lg">
+              {globalData.deaths.toLocaleString()}
+            </p>
+          </div>
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Total Recovered</h2>
+            <p className="text-gray-700 text-center text-lg">
+              {globalData.recovered.toLocaleString()}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Line Chart */}
       <div className="mt-10">
-        <h2>Cases Over Time</h2>
-        <Line data={lineChartData} options={lineChartOptions} />
+        <h1 className="text-2xl font-bold mb-6 text-center">Cases Over Time</h1>
+        <div className="relative h-96">
+          <Line data={lineChartData} options={lineChartOptions} />
+        </div>
       </div>
 
       {/* Leaflet Map */}
       <div className="mt-10">
-        <h2>Map of COVID-19 Cases by Country</h2>
+        <h1 className="text-2xl font-bold mb-8 text-center">
+          Map of COVID-19 Cases by Country
+        </h1>
 
         {/* Render the map only when mapLoaded is true */}
         {mapLoaded && (
@@ -140,7 +165,9 @@ const ChartPage: React.FC = () => {
             zoom={2}
             minZoom={2}
             maxZoom={6}
-            style={{ height: "500px", width: "100%" }}
+            maxBounds={bounds}
+            maxBoundsViscosity={1.0}
+            className="w-full min-h-[500px] max-h-[800px]"
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -148,17 +175,17 @@ const ChartPage: React.FC = () => {
             />
             {countryData.map((country: any) => (
               <Marker
-                key={country.countryInfo._id}
+                key={`${country.country}-${country.countryInfo._id}`}
                 position={[country.countryInfo.lat, country.countryInfo.long]}
                 icon={covidIcon}
               >
                 <Popup>
                   <div>
                     <h3>{country.country}</h3>
-                    <p>Total Cases: {country.cases}</p>
-                    <p>Active Cases: {country.active}</p>
-                    <p>Recovered: {country.recovered}</p>
-                    <p>Deaths: {country.deaths}</p>
+                    <p>Total Cases: {country.cases.toLocaleString()}</p>
+                    <p>Active Cases: {country.active.toLocaleString()}</p>
+                    <p>Recovered: {country.recovered.toLocaleString()}</p>
+                    <p>Deaths: {country.deaths.toLocaleString()}</p>
                   </div>
                 </Popup>
               </Marker>
