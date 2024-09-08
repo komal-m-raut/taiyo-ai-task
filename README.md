@@ -2,17 +2,34 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and uses TypeScript for type-checking.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+To get started with this project, follow these steps:
 
-### `npm start`
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/komal-m-raut/taiyo-ai-task.git
+   
+2. **Install dependencies:**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    ```bash
+    npm install
+    
+3. **Run the project:**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    In the project directory, you can run:
+
+     ```bash
+     npm start
+     ```
+
+    Runs the app in the development mode.\
+    Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+    
+4. **Start editing the src/App.tsx page:**
+
+    Open the src/App.tsx file and start making your changes.
 
 ## API Endpoints
 
